@@ -11,6 +11,7 @@ class AddTodo extends Component {
       content: "",
       date: "",
       due: null,
+      
     };
   }
   // The handleChange function updates the react state with the new input value provided from the user and the current date/time.
@@ -22,6 +23,13 @@ class AddTodo extends Component {
       date: Date().toLocaleString('en-US')
     });
   };
+
+  handleChangeDate = (event) => {  //Hint: use handleChange as a template. Don't forget to remove the content and date values. You won't need that here.
+    this.setState({            //Note that the value from the the date picker will give more that just the date in mm/dd/yyyy. To format the date we need set the due date variable to new Date(event).toLocaleDateString()
+      due: new Date(event).toLocaleDateString()
+    });
+  };
+
   // The handleSubmit function collects the forms input and puts it into the react state.
   // event.preventDefault() is called to prevents default event behavior like refreshing the browser.
   // this.props.addTodo(this.state) passes the current state (or user input and current date/time) into the addTodo function defined
@@ -32,7 +40,8 @@ class AddTodo extends Component {
       this.props.addTodo(this.state);
       this.setState({
         content: "",
-        date: ""
+        date: "",
+        due:null,
       });
     }
   };
@@ -57,7 +66,7 @@ class AddTodo extends Component {
           id="new-item-date"
           label="Due Date"
           value={this.state.due}
-          onChange={/*onChange*/}
+          onChange={this.handleChangeDate}
           renderInput={(params) => <TextField {...params} />}
         />
         </LocalizationProvider>
